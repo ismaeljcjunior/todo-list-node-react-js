@@ -3,16 +3,17 @@ dotenv.config()
 import { Request, Response } from 'express'
 import { PrismaClient } from '@prisma/client'
 import axios, { AxiosResponse } from 'axios'
+import { ItaskProps } from './../interfaces/interfaces';
 
 const prisma = new PrismaClient()
 
 export const newTask = async (req: Request, res: Response) => {
-    const dataNewTask = await req.body
+    const dataNewTask: ItaskProps = await req.body
     try {
         const newTask = await prisma.tasks.create({
             data: {
-                task_name: dataNewTask.task_name,
-                task_description: dataNewTask.task_description,
+                task_name: dataNewTask.task_name as string,
+                task_description: dataNewTask.task_description as string,
             }
         })
         console.log(newTask)
@@ -24,7 +25,7 @@ export const newTask = async (req: Request, res: Response) => {
 export const updateTask = async (req: Request, res: Response) => {
     const data = await req.body
     try {
-        const updateTask = await prisma.tasks.updateTask({
+        const updateTask = await prisma.tasks.update({
             where: {
                 task_name: data.name
             },
