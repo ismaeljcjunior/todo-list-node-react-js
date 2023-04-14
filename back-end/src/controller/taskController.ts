@@ -27,7 +27,7 @@ export const updateTask = async (req: Request, res: Response) => {
     try {
         const updateTask = await prisma.tasks.update({
             where: {
-                id_task: Number(dataId),
+                id_tasks: Number(dataId),
             },
             data: {
                 task_name: data.name,
@@ -45,7 +45,7 @@ export const deleteTask = async (req: Request, res: Response) => {
     try {
         const deleteTask = await prisma.tasks.delete({
             where: {
-                id_task: Number(dataId),
+                id_tasks: Number(dataId),
             },
         })
         console.log(deleteTask)
