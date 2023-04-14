@@ -13,7 +13,6 @@ export const newTask = async (req: Request, res: Response) => {
         const newTask = await prisma.tasks.create({
             data: {
                 task_name: dataNewTask.task_name as string,
-                task_description: dataNewTask.task_description as string,
             }
         })
         console.log(newTask)
@@ -23,15 +22,15 @@ export const newTask = async (req: Request, res: Response) => {
     }
 }
 export const updateTask = async (req: Request, res: Response) => {
-    const data = await req.body
+    const dataId = Number(req.params.id)
+    const data = req.body
     try {
         const updateTask = await prisma.tasks.update({
             where: {
-                task_name: data.name
+                id_task: Number(dataId),
             },
             data: {
                 task_name: data.name,
-                task_description: data.description,
                 task_status: data.status
             }
         })
@@ -42,11 +41,11 @@ export const updateTask = async (req: Request, res: Response) => {
     }
 }
 export const deleteTask = async (req: Request, res: Response) => {
-    const dataId = req.params.id
+    const dataId = Number(req.params.id)
     try {
         const deleteTask = await prisma.tasks.delete({
             where: {
-                id_task: dataId,
+                id_task: Number(dataId),
             },
         })
         console.log(deleteTask)
